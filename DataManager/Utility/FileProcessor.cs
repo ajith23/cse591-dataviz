@@ -63,23 +63,29 @@ namespace Utility
         {
             var nodeJson = string.Empty;
             var edgeJson = string.Empty;
-            var nodes = new HashSet<string>();
+            var nodes = new Dictionary<string, int>();
 
             var topEdges = edges.OrderByDescending(e => e.Value).Take(count).ToList();
 
+            //normalize Edge Value.
+            var minEdge = topEdges.Min(e=>e.Value);
+            var maxEdge = topEdges.Max(e=>e.Value);
+
+            //2 - 7
+            
 
             var edgeTemp = new List<string>();
             foreach (var edge in topEdges)
             {
                 var nodeData = edge.Key.Split('|');
-                nodes.Add(nodeData[0]);
-                nodes.Add(nodeData[1]);
+                if (nodes.ContainsKey(nodeData[0])) nodes[nodeData[0]]++; else nodes.Add(nodeData[0], 1);
+                if (nodes.ContainsKey(nodeData[1])) nodes[nodeData[1]]++; else nodes.Add(nodeData[1], 1);
                 edgeTemp.Add("{'source': '" + nodeData[0] + "', 'target': '" + nodeData[1] + "', 'value': " + edge.Value + "}");
             }
 
             var nodeTemp = new List<string>();
             foreach (var node in nodes)
-                nodeTemp.Add("{'id': '" + node + "', 'group': " + GetGroup(node) + "}");
+                nodeTemp.Add("{'id': '" + node.Key + "', 'name': '" + node.Key + "', 'value': " + node.Value + ", 'group': " + GetGroup(node.Key) + "}");
 
             nodeJson = "[ " + string.Join(",", nodeTemp) + " ]";
             edgeJson = "[ " + string.Join(",", edgeTemp) + " ]";
