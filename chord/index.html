@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+  <html>
+  <body>
+  <div id='chord'>
+    <div id="filters" style="width: 100px;float:left">
+      <div id='filter_list'>
+      </div>
+      <div>
+      <h3>Count</h3>
+      <input id="slider" type="range" min="1" max="500" step="1" value="20"/>
+      </div>
+    </div>
+    <div id='chart' style="width:984px;float:right">
+    </div> 
+</div>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script type="text/javascript" src="d3.js"></script>
+  <script type="text/javascript" src="d3.layout.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.7/d3.min.js"></script>
+  <script src="http://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+  <script type="text/javascript">
+  $("#slider").on("change", function(){drawchart(parseInt($("input:radio[name='group1']:checked").val()))});
+  d3.csv('data.csv', function (err, data) {
+       year_list = [];
+       $('#filter_list').html('');
+      data.forEach(function (d) {
+        if(year_list.indexOf(d.year)===-1){
+          year_list.push(d.year);
+        }
+      });
+      year_list.sort(function(a, b){return b-a});
+      $('#filter_list').append("<h3>Years</h3>");
+      year_list.forEach(function(d){
+        if(d==='2013'){
+        var temp= '<input type="radio"  onclick="drawchart('+d+')"  checked="checked" name="group1" value='+d+'>'+d+' <br>';  
+        }
+        else{
+        var temp= '<input type="radio"  onclick="drawchart('+d+')"  name="group1" value='+d+'>'+d+' <br>';
+      }
+        $('#filter_list').append(temp);
+
+      });
+    });
+
+  function drawchart(year){
+    // IMPORT THE CSV DATA
+      d3.csv('data.csv', function (err, data) {
+       data.forEach(function (d) {
+        // console.log(d.year);
+      });
+       $("#slider").attr("max", 10);
+       $("#slider").attr("value", 10);
+
+     });
+
+
+       $('#chart').html('');
+    d3.csv('data.csv', function (err, data) {
+       tags = [];
+      data.forEach(function (d) {
+        console.log(d);
+        if(year!==''){
+        if (d.year==year.toString()){
+        console.log(d.tag1);
+        console.log(d.tag2);
+       // mid.push(parseInt(d.mid));
+        tags.push(d.tag1);
+        tags.push(d.tag2);
+      }}
+      else{
+        // console.log(d.tag1);
+        tags.push(d.tag1);
+        tags.push(d.tag2);
+          }
+
+      });
+    // var sorted = mid.sort(function(a, b){return b-a});
+    var unique = [];
+     unique = tags.filter(function(elem, index, self) {
+    return index == self.indexOf(elem);
+      });
+    console.log(unique)
+    arr = [];
+    console.log(unique.length);
+    for(var x = 0; x < unique.length; x++){
+        arr[x] = [];    
+        for(var y = 0; y < unique.length; y++){ 
+            arr[x][y] = 0;    
+        }    
+    }
+    // console.log(unique);
+    // console.log(arr);
+    
+    d3.csv('data.csv', function (err, data) {
+              // i=0;
+        // j=1;
+      data.forEach(function (d) {
+        if (year!==''){
+        if (d.year==year){
+          i = unique.indexOf(d.tag1);
+          j = unique.indexOf(d.tag2);
+          // console.log(d.tag1,d.tag2);
+          // console.log(i,j);
+          // if (parseInt(d.mid)>sorted[20]){
+          try{
+
+            arr[i][j] = parseInt(d.flow1);
+            arr[j][i] = parseInt(d.flow2);
+          }
+            catch(err){
+              // i++;
+              // j++
+              // console.log(err);
+            // }
+      }}}
+      else{
+        i = unique.indexOf(d.tag1);
+          j = unique.indexOf(d.tag2);
+          // console.log(d.tag1,d.tag2);
+          // console.log(i,j);
+          // if (parseInt(d.mid)>sorted[20]){
+          try{
+
+            arr[i][j] = parseInt(d.flow1);
+            arr[j][i] = parseInt(d.flow2);
+          }
+            catch(err){
+              // i++;
+              console.log(err);
+              // j++
+            // }
+      }
+      }
+      });
+      tempstr = '[';
+      for(q=0;q<arr.length;q++){
+        tempstr += '[';
+        tempstr += arr[q].toString();
+        tempstr += '],';
+      }
+      tempstr+= ']';
+      console.log(tempstr);
+    
+
+      // console.log(tempstr);
+    
+      // console.log(arr);
+     var chord = d3.layout.chord()
+       .padding(.05)
+       // .sortSubgroups(d3.descending)
+       .matrix(arr);
+    var c20c = d3.scale.category20c();
+
+     var w = 700,
+         h = 700,
+         r0 = Math.min(w, h) * .41,
+         r1 = r0 * 1.1;
+     
+     var fill = d3.scale.ordinal()
+         .domain(d3.range(4))
+         .range(["#000000", "#FFDD89", "#957244", "#F26223"]);
+     
+     var svg = d3.select("#chart")
+       .append("svg:svg")
+         .attr("width", w+200)
+         .attr("height", h+200)
+         .style("padding-left", 110)
+         .style("padding-top", 80)
+       .append("svg:g")
+         .attr("transform", "translate(" + w / 2 + "," + h / 2 + ")");
+     
+     svg.append("svg:g")
+       .selectAll("path")
+         .data(chord.groups)
+       .enter().append("svg:path")
+         .style("fill", function(d) { return c20c(d.index); })
+         .style("stroke", function(d) { return c20c(d.index); })
+         .attr("d", d3.svg.arc().innerRadius(r0).outerRadius(r1))
+         .on("mouseover", fade(.1))
+         .on("mouseout", fade(1));
+
+    
+     
+     var ticks = svg.append("svg:g")
+       .selectAll("g")
+         .data(chord.groups)
+       .enter().append("svg:g")
+       .selectAll("g")
+         .data(groupTicks)
+       .enter().append("svg:g")
+         .attr("transform", function(d) {
+           return "rotate(" + (d.angle * 180 / Math.PI - 90) + ")"
+               + "translate(" + r1 + ",0)";
+         });
+     
+     ticks.append("svg:line")
+         .attr("x1", 1)
+         .attr("y1", 0)
+         .attr("x2", 5)
+         .attr("y2", 0)
+         .style("stroke", "#000");
+     
+     ticks.append("svg:text")
+         .attr("x", 8)
+         .attr("dy", ".35em")
+         .attr("text-anchor", function(d) {
+           return d.angle > Math.PI ? "end" : null;
+         })
+         .attr("transform", function(d) {
+           return d.angle > Math.PI ? "rotate(180)translate(-16)" : null;
+         })
+         .text(function(d) { return d.label; });
+     
+     svg.append("svg:g")
+         .attr("class", "chord")
+       .selectAll("path")
+         .data(chord.chords)
+       .enter().append("svg:path")
+         .style("fill", function(d) { 
+          return c20c(d.source.index); })
+         .attr("d", d3.svg.chord().radius(r0))
+         .style("opacity", 1);
+     
+     /** Returns an array of tick angles and labels, given a group. */
+     function groupTicks(d) {
+        // console.log(d);
+       var k = (d.endAngle - d.startAngle) / d.value;
+       return d3.range(0, d.value, 1000).map(function(v, i) {
+         return {
+           angle: v * k + d.startAngle,
+           label: unique[d.index]
+         };
+       });
+     }
+     
+     /** Returns an event handler for fading a given chord group. */
+     function fade(opacity) {
+       return function(g, i) {
+         svg.selectAll("g.chord path")
+             .filter(function(d) {
+               return d.source.index != i && d.target.index != i;
+             })
+           .transition()
+             .style("opacity", opacity);
+       };
+     }});
+     });}
+  drawchart(2013);
+     </script>
+     
+     </body>
+ </html>
