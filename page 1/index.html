@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>evolution of programming</title>
+  <link rel="stylesheet" href="style2.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+  $( function() {
+    var select = $( "#minbeds" );
+    var slider = $( "<div id='slider'></div>" ).insertAfter( select ).slider({
+      min: 2008,
+      max: 2016,
+      range: "min",
+      value: select[ 0 ].selectedIndex + 1,
+      slide: function( event, ui ) {
+        select[ 0 ].selectedIndex = ui.value - 2008;
+      }
+    });
+    $( "#minbeds" ).on( "change", function() {
+      slider.slider( "value", this.selectedIndex + 2008 );
+    });
+  } );
+  </script>
+</head>
+<body>
+<div style="width: 100%;height: 20%;border:1px solid black;" >
+<style>
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: #111;
+}
+</style>
+</head>
+<body>
+<ul style="text-align: center">
+<li style="color: white; display:inline-block;padding-left: 40% ">Evolution of Programming</li>
+</ul>
+<ul>
+
+  <li><a class="active" href="#home">Home</a></li>
+</ul>
+</div>
+
+<div>
+<form id="reservation">
+  <label for="minbeds">Selected Year</label>
+  <select name="minbeds" id="minbeds">
+    <option>2008</option>
+    <option>2009</option>
+    <option>2010</option>
+    <option>2011</option>
+    <option>2012</option>
+    <option>2013</option>
+    <option>2014</option>
+    <option>2015</option>
+    <option>2016</option>
+  </select>
+</form>
+</div>
+<div  style="border:1px solid black;width: 10%;height: 80%">
+<h2>Tags</h2>
+<form action="">
+<input type="checkbox" name="vehicle" value="Bike">I have a bike<br>
+<input type="checkbox" name="vehicle" value="Car">I have a car 
+</form>
+</div>
+ 
+</body>
+</html>
