@@ -20,9 +20,10 @@ namespace DataManager
                 var tagList = Utility.FileProcessor.GetTagList(path);
 
                 var edges = Utility.FileProcessor.GetGraphEdges(tagList);
-                var s = Utility.FileProcessor.GetJsonData(edges, 100);
-                
-                var jsonPath = string.Format(@"C:\Users\ajithv\Desktop\DV-Project-Back\Top Questions\{0}json.json", year);
+                var s = Utility.FileProcessor.GetJsonData(edges, 50);
+
+                //var jsonPath = string.Format(@"C:\Users\ajithv\Desktop\DV-Project-Back\Top Questions\{0}json.json", year);
+                var jsonPath = string.Format(@"C:\Users\ajithv\Desktop\DV-Project-Back\test-d3\{0}json.json", year);
                 System.IO.File.WriteAllText(jsonPath, s.Replace("'", "\""));
 
                 Console.WriteLine("-------------------- "+year+" ---------------------");

@@ -68,8 +68,8 @@ namespace Utility
             var topEdges = edges.OrderByDescending(e => e.Value).Take(count).ToList();
 
             //normalize Edge Value.
-            var minEdge = topEdges.Min(e=>e.Value);
-            var maxEdge = topEdges.Max(e=>e.Value);
+            //var minEdge = topEdges.Min(e=>e.Value);
+            //var maxEdge = topEdges.Max(e=>e.Value);
 
             //2 - 7
             
@@ -80,21 +80,29 @@ namespace Utility
                 var nodeData = edge.Key.Split('|');
                 if (nodes.ContainsKey(nodeData[0])) nodes[nodeData[0]]++; else nodes.Add(nodeData[0], 1);
                 if (nodes.ContainsKey(nodeData[1])) nodes[nodeData[1]]++; else nodes.Add(nodeData[1], 1);
-                edgeTemp.Add("{'source': '" + nodeData[0] + "', 'target': '" + nodeData[1] + "', 'value': " + edge.Value + "}");
+                //edgeTemp.Add("{'source': '" + nodeData[0] + "', 'target': '" + nodeData[1] + "', 'value': " + edge.Value + "}");
             }
 
             var nodeTemp = new List<string>();
-            foreach (var node in nodes)
+            var tempNodeList = nodes.ToList();
+            var tempNodeStringList = nodes.Select(n=>n.Key).ToList();
+            foreach (var node in tempNodeList)
                 nodeTemp.Add("{'id': '" + node.Key + "', 'name': '" + node.Key + "', 'value': " + node.Value + ", 'group': " + GetGroup(node.Key) + "}");
-
+            foreach (var edge in topEdges)
+            {
+                var nodeData = edge.Key.Split('|');
+                edgeTemp.Add("{'source': " + tempNodeStringList.IndexOf(nodeData[0]) + ", 'target': " + tempNodeStringList.IndexOf(nodeData[1]) + ", 'value': " + edge.Value + "}");
+            }
             nodeJson = "[ " + string.Join(",", nodeTemp) + " ]";
             edgeJson = "[ " + string.Join(",", edgeTemp) + " ]";
 
-            return "{ 'nodes': " + nodeJson + ", 'links': " + edgeJson + "}";
+            return "{ 'nodes': " + nodeJson + ", 'edges': " + edgeJson + "}";
         }
+
+        static int t = 0;
         private static int GetGroup(string node)
         {
-            return 1;
+            return t++ % 3;
         }
 
         public static HashSet<string> GetLanguageTags()
