@@ -34,7 +34,7 @@ function buildNetwork(dataset) {
       .enter()
       .append("line")
       .attr("id", function (d, i) { return 'edge' + i })
-      //.attr("stroke-width", function(d) { return (d.value); })
+      .attr("stroke-width", function(d) { return (d.value); })
       .style("stroke", "#ccc")
       .style("pointer-events", "none");
 
@@ -43,8 +43,8 @@ function buildNetwork(dataset) {
       .enter()
       .append("circle")
       .attr({ "r": function (d) { return (d.value); } })
-      .on("dblclick", function (d) { alert(d.name); })
-      .style("fill", function (d, i) { return colors(i); })
+      .on("dblclick", function (d) { window.location.href = "/details.html?year=" + $('#yearSelector button.active').html() + "&tag=" + d.name; })
+      .style("fill", function (d, i) { return colors(d.group); })
       .call(force.drag)
 
 
@@ -56,7 +56,9 @@ function buildNetwork(dataset) {
            "x": function (d) { return d.x; },
            "y": function (d) { return d.y; },
            "class": "nodelabel",
-           "stroke": "black"
+           "stroke": "black",
+           "font-weight": 100,
+           "font-family": "courier new"
        })
        .text(function (d) { return d.name; });
 
@@ -83,7 +85,7 @@ function buildNetwork(dataset) {
         .attr({
             'class': 'edgelabel',
             'id': function (d, i) { return 'edgelabel' + i },
-            'dx': 80,
+            'dx': 40,
             'dy': 0,
             'font-size': 10,
             'fill': '#aaa'
@@ -92,7 +94,7 @@ function buildNetwork(dataset) {
     edgelabels.append('textPath')
         .attr('xlink:href', function (d, i) { return '#edgepath' + i })
         .style("pointer-events", "none")
-        .text(function (d, i) { return d.value; });
+        .text(function (d, i) { return d.actualValue; });
 
     force.on("tick", function () {
         edges.attr({

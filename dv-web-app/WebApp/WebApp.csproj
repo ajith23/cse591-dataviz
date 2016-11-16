@@ -64,7 +64,9 @@
     <Content Include="about.html" />
     <Content Include="css\c3.min.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="details.html" />
     <Content Include="js\c3.min.js" />
+    <Content Include="js\chord.js" />
     <Content Include="js\network.js" />
     <Content Include="js\modernizr.js" />
     <Content Include="packages.config" />
