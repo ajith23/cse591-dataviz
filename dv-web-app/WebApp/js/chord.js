@@ -151,8 +151,8 @@ window.onload = function () {
 
         var chord_options = {
             "gnames": labelArray,
-            "rotation": rotation,
-            "colors": ["#034e7b", "#feb24c", "#b10026", "#238443", "#fdbb84", "#ffffb2", "#fed976"]
+            "rotation": rotation
+            //"colors": ["#034e7b", "#feb24c", "#b10026", "#238443", "#fdbb84", "#ffffb2", "#fed976"]
         };
 
         Chord(visual, chord_options, matrix);
@@ -172,19 +172,33 @@ function buildMatrix(data) {
 
     //var labelArray = [];
     var pointArray = [];
-
+    var dataArray = [];
     for (var i = 0; i < targets.length; i++) {
-        labelArray.push(data.nodes[targets[i].target].id);
-        pointArray.push(data.nodes[targets[i].target].actualValue);
+        //labelArray.push(data.nodes[targets[i].target].id);
+        //pointArray.push(data.nodes[targets[i].target].actualValue);
+        dataArray.push({ 'label': data.nodes[targets[i].target].id, 'value': parseFloat(data.nodes[targets[i].target].actualValue) });
     }
     for (var i = 0; i < sources.length; i++) {
-        labelArray.push(data.nodes[sources[i].source].id);
-        pointArray.push(data.nodes[sources[i].source].actualValue);
+        //labelArray.push(data.nodes[sources[i].source].id);
+        //pointArray.push(data.nodes[sources[i].source].actualValue);
+        dataArray.push({ 'label': data.nodes[sources[i].source].id, 'value': parseFloat(data.nodes[sources[i].source].actualValue) });
     }
 
-    labelArray.push(queryParamTag);
-    pointArray.push(0);
+    //labelArray.push(queryParamTag);
+    //pointArray.push(0);
+    console.log(dataArray);
 
+    dataArray.sort(function (a, b) {
+        return parseFloat(a.value) - parseFloat(b.value);
+    });
+    dataArray.push({ 'label': queryParamTag, 'value': 0 });
+
+    for (var i = 0; i < dataArray.length; i++) {
+        labelArray.push(dataArray[i].label);
+        pointArray.push(dataArray[i].value);
+    }
+    console.log(pointArray);
+    console.log(labelArray);
     var m = [];
     for (var i = 0; i < labelArray.length; i++) {
         var row = [];
@@ -207,4 +221,4 @@ function buildMatrix(data) {
     return m;
 }
 
-d3.select(self.frameElement).style("height", "600px");
+//d3.select(self.frameElement).style("height", "600px");

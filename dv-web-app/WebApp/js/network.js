@@ -1,6 +1,6 @@
 ﻿var w = 1000;
 var h = 600;
-var linkDistance = 70;
+var linkDistance = 80;
 
 var colors = d3.scale.category10();
 
@@ -28,13 +28,15 @@ function buildNetwork(dataset) {
         .theta(0.1)
         .gravity(0.05)
         .start();
+    var drag = force.drag()
+    .on("dragstart", dragstart);
 
     var edges = svg.selectAll("line")
       .data(dataset.edges)
       .enter()
       .append("line")
       .attr("id", function (d, i) { return 'edge' + i })
-      .attr("stroke-width", function(d) { return (d.value); })
+      .attr("stroke-width", function (d) { return (d.value); })
       .style("stroke", "#ccc")
       .style("pointer-events", "none");
 
@@ -53,7 +55,7 @@ function buildNetwork(dataset) {
        .enter()
        .append("text")
        .attr({
-           "x": function (d) { return d.x; },
+           "x": function (d) { return d.x + 10; },
            "y": function (d) { return d.y; },
            "class": "nodelabel",
            "stroke": "black",
@@ -67,7 +69,18 @@ function buildNetwork(dataset) {
         .enter()
         .append('path')
         .attr({
-            'd': function (d) { return 'M ' + d.source.x + ' ' + d.source.y + ' L ' + d.target.x + ' ' + d.target.y },
+            'd': function (d) {
+                /*var dx = d.target.x - d.source.x,
+                dy = d.target.y - d.source.y,
+                dr = Math.sqrt(dx * dx + dy * dy);
+                return "M" +
+                    d.source.x + "," +
+                    d.source.y + "A" +
+                    dr + "," + dr + " 0 0,1 " +
+                    d.target.x + "," +
+                    d.target.y;*/
+                return 'M ' + d.source.x + ' ' + d.source.y + ' L ' + d.target.x + ' ' + d.target.y
+            },
             'class': 'edgepath',
             'fill-opacity': 0,
             'stroke-opacity': 0,
@@ -102,8 +115,21 @@ function buildNetwork(dataset) {
             "x2": function (d) { return d.target.x; }, "y2": function (d) { return d.target.y; }
         });
         nodes.attr({ "cx": function (d) { return d.x; }, "cy": function (d) { return d.y; } });
-        nodelabels.attr("x", function (d) { return d.x; }).attr("y", function (d) { return d.y; });
-        edgepaths.attr('d', function (d) { var path = 'M ' + d.source.x + ' ' + d.source.y + ' L ' + d.target.x + ' ' + d.target.y; return path });
+        nodelabels.attr("x", function (d) { return d.x + 10; }).attr("y", function (d) { return d.y; });
+        edgepaths.attr('d', function (d) {
+            /*var dx = d.target.x - d.source.x,
+            dy = d.target.y - d.source.y,
+            dr = Math.sqrt(dx * dx + dy * dy);
+            return "M" +
+                d.source.x + "," +
+                d.source.y + "A" +
+                dr + "," + dr + " 0 0,1 " +
+                d.target.x + "," +
+                d.target.y;*/
+
+            var path = 'M ' + d.source.x + ' ' + d.source.y + ' L ' + d.target.x + ' ' + d.target.y;
+            return path
+        });
         edgelabels.attr('transform', function (d, i) {
             if (d.target.x < d.source.x) {
                 bbox = this.getBBox();
@@ -116,4 +142,7 @@ function buildNetwork(dataset) {
             }
         });
     });
+    function dragstart(d) {
+        d3.select(this).classed("fixed", d.fixed = true);
+    }
 }
