@@ -12,8 +12,8 @@ function Chord(container, options, matrix) {
 
     // initialize the chord configuration variables
     var config = {
-        width: 640,
-        height: 560,
+        width: 560,
+        height: 460,
         rotation: 0,
         textgap: 26,
         colors: ["#7fc97f", "#beaed4", "#fdc086", "#ffff99", "#386cb0", "#f0027f", "#bf5b17", "#666666"]
@@ -144,6 +144,10 @@ function Chord(container, options, matrix) {
 
 window.onload = function () {
     $('#detailsHeader').html(queryParamTag);
+    $('#tagRelationsTitle').html('Tag Relations for ' + queryParamTag + ' in ' + year);
+    loadForumSupportQandAA(queryParamTag);
+    loadForumSupportPostCount(queryParamTag);
+
     var dataFile = 'data/' + year + 'json.json';
     d3.json(dataFile, function (error, data) {
         if (error) throw error;
@@ -151,8 +155,8 @@ window.onload = function () {
 
         var chord_options = {
             "gnames": labelArray,
-            "rotation": rotation
-            //"colors": ["#034e7b", "#feb24c", "#b10026", "#238443", "#fdbb84", "#ffffb2", "#fed976"]
+            "rotation": rotation,
+            "colors": ["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]
         };
 
         Chord(visual, chord_options, matrix);
@@ -170,23 +174,14 @@ function buildMatrix(data) {
     var targets = $.grep(data.edges, function (e) { return e.source == tagIndex });
     var sources = $.grep(data.edges, function (e) { return e.target == tagIndex });
 
-    //var labelArray = [];
     var pointArray = [];
     var dataArray = [];
     for (var i = 0; i < targets.length; i++) {
-        //labelArray.push(data.nodes[targets[i].target].id);
-        //pointArray.push(data.nodes[targets[i].target].actualValue);
         dataArray.push({ 'label': data.nodes[targets[i].target].id, 'value': parseFloat(data.nodes[targets[i].target].actualValue) });
     }
     for (var i = 0; i < sources.length; i++) {
-        //labelArray.push(data.nodes[sources[i].source].id);
-        //pointArray.push(data.nodes[sources[i].source].actualValue);
         dataArray.push({ 'label': data.nodes[sources[i].source].id, 'value': parseFloat(data.nodes[sources[i].source].actualValue) });
     }
-
-    //labelArray.push(queryParamTag);
-    //pointArray.push(0);
-    console.log(dataArray);
 
     dataArray.sort(function (a, b) {
         return parseFloat(a.value) - parseFloat(b.value);
@@ -197,8 +192,8 @@ function buildMatrix(data) {
         labelArray.push(dataArray[i].label);
         pointArray.push(dataArray[i].value);
     }
-    console.log(pointArray);
-    console.log(labelArray);
+    //console.log(pointArray);
+    //console.log(labelArray);
     var m = [];
     for (var i = 0; i < labelArray.length; i++) {
         var row = [];
@@ -215,9 +210,9 @@ function buildMatrix(data) {
         }
     }
 
-    console.log(tagIndex);
-    console.log(labelArray);
-    console.log(pointArray);
+    //console.log(tagIndex);
+    //console.log(labelArray);
+    //console.log(pointArray);
     return m;
 }
 

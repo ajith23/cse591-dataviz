@@ -59,6 +59,47 @@ namespace Utility
             return edges;
         }
 
+
+        public static Dictionary<string, List<double>> GetGraphEdgesHistory()
+        {
+            var output = new Dictionary<string, List<double>>();
+            var startYear = 2008;
+
+            for (var year = startYear; year <= 2016; year++)
+            {
+                var path = string.Format(@"C:\Users\ajithv\Desktop\DV-Project-Back\Top Questions\{0}.csv", year);
+                var index = year - startYear;
+                var yearEdges = GetGraphEdges(GetTagList(path));
+
+                foreach(var edge in yearEdges)
+                {
+                    if (output.ContainsKey(edge.Key))
+                    {
+                        while (output[edge.Key].Count() <= index)
+                            output[edge.Key].Add(0.0);
+                        output[edge.Key][index] = edge.Value;
+                    }
+                    else
+                    {
+                        var value = new List<double>();
+                        for (var i = 0; i <= index; i++)
+                            value.Add(0.0);
+                        value[index] = edge.Value;
+                        output.Add(edge.Key, value);
+                    }
+                }
+            }
+
+            foreach(var item in output)
+            {
+                if (item.Value.Count < 9)
+                    while (item.Value.Count() == 9)
+                        item.Value.Add(0.0);
+            }
+            return output;
+        }
+
+
         public static string GetJsonData(Dictionary<string, double> edges, int count)
         {
             var nodeJson = string.Empty;

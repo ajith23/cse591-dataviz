@@ -67,6 +67,7 @@
     <Content Include="details.html" />
     <Content Include="js\c3.min.js" />
     <Content Include="js\chord.js" />
+    <Content Include="js\forumSupport.js" />
     <Content Include="js\network.js" />
     <Content Include="js\modernizr.js" />
     <Content Include="packages.config" />
@@ -88,6 +89,8 @@
     <Content Include="data\2014json.json" />
     <Content Include="data\2015json.json" />
     <Content Include="data\2016json.json" />
+    <Content Include="data\forumSupportData.csv" />
+    <Content Include="data\tagPostCountYearWise.csv" />
     <None Include="Properties\PublishProfiles\app.pubxml" />
     <None Include="Properties\PublishProfiles\local publish.pubxml" />
     <None Include="Web.Debug.config">

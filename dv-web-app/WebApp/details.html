@@ -9,6 +9,7 @@
     <script src="js/custom.js"></script>
     <script src="js/c3.min.js"></script>
     <script src="js/chord.js"></script>
+    <script src="js/forumSupport.js"></script>
     <link href="css/bootstrap.css" rel="stylesheet" />
     <link href="css/customstyle.css" rel="stylesheet" />
     <link href="css/c3.min.css" rel="stylesheet" />
@@ -41,43 +42,41 @@
                 <br />
                 <h4>Stack Overflow - Unbound (Visual Analytics)</h4>
             </div>
-            
+
             <div class="row">
                 <h5><b><span id="detailsHeader"></span></b></h5>
             </div>
 
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-12">
+                    <div class="panel panel-success">
+                        <div class="panel-heading"><h3 class="panel-title">Trend</h3></div>
+                        <div class="panel-body">
+                            <div id="areaChart1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
                     <div class="panel panel-info">
-                        <div class="panel-heading"><h3 class="panel-title">Tag Relations</h3></div>
+                        <div class="panel-heading"><h3 class="panel-title" id="tagRelationsTitle">Tag Relations</h3></div>
                         <div class="panel-body">
                             <div id="chordChart">
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="col-lg-4">
-                    <div class="row">
-                        <div class="panel panel-warning">
-                            <div class="panel-heading"><h3 class="panel-title">Compared to other related tags</h3></div>
-                            <div class="panel-body">
-                                <div id="barChart1"> --questions compared to accepted answers here--
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="panel panel-warning">
-                            <div class="panel-heading"><h3 class="panel-title">Trend</h3></div>
-                            <div class="panel-body">
-                                <div id="barChart2"> --trend chart here--
-                                </div>
+                <div class="col-lg-6">
+                    <div class="panel panel-warning">
+                        <div class="panel-heading"><h3 class="panel-title">Compared to other related tags</h3></div>
+                        <div class="panel-body">
+                            <div id="barChart1">
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

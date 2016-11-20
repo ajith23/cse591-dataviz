@@ -16,6 +16,7 @@ namespace DataManager
 
             for(var year = 2008; year <= 2016; year++)
             {
+                //var d = Utility.FileProcessor.GetGraphEdgesHistory();
                 var path = string.Format(@"C:\Users\ajithv\Desktop\DV-Project-Back\Top Questions\{0}.csv", year);
                 var tagList = Utility.FileProcessor.GetTagList(path);
 
