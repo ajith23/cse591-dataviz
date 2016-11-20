@@ -2,7 +2,7 @@ from gensim import corpora, models, similarities
 from gensim.models import hdpmodel, ldamodel
 from itertools import izip
 import csv
-import matplotlib.pyplot as plt
+import sys
 
 # documents = ["Human machine interface for lab abc computer applications",
 #               "A survey of user opinion of computer system response time",
@@ -16,15 +16,24 @@ import matplotlib.pyplot as plt
 
 documents = []
 i=0
-with open('test.csv') as csvfile:
-  reader = csv.DictReader(csvfile)
-  for row in reader:
-    if row['Title']:
-      i = i+1
-      print i,row['Title']
-      documents.append(row['Title'].replace('?',''))
+with open('data.csv') as csvfile:
+	reader = csv.DictReader(csvfile)
+	for row in reader:
+		tag = row['Tags'].replace('<','').split('>')
+		if 'python' in tag:
+			i = i+1
+			print i
+			if i <100:
+				print i,row['Title']
+				documents.append(row['Title'].replace('?',''))
+			else:
+				break
+# else:
+# break
 
 print documents
+print len(documents)
+sys.exit(0)
 # remove common words and tokenize
 stoplist = set('does most  your string it with another an from how what why when where is can which are be i should for a of the and to in'.split())
 texts = [[word for word in document.lower().split() if word not in stoplist]
