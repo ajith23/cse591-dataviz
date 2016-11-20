@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+    <script src="js/jquery-1.8.0.min.js"></script>
+    <script src="js/d3/d3.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/modernizr.js"></script>
+    <script src="js/custom.js"></script>
+    <script src="js/c3.min.js"></script>
+    <script src="js/chord.js"></script>
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <link href="css/customstyle.css" rel="stylesheet" />
+    <link href="css/c3.min.css" rel="stylesheet" />
+    <meta charset="utf-8" />
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">DV Project</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="index.html"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+                    <li><a href="about.html"><span class="glyphicon glyphicon-info-sign"></span> About</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="jumbotron">
+        <div class="container">
+
+            <div class="row">
+                <br />
+                <h4>Stack Overflow - Unbound (Visual Analytics)</h4>
+            </div>
+            
+            <div class="row">
+                <h5><b><span id="detailsHeader"></span></b></h5>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="panel panel-info">
+                        <div class="panel-heading"><h3 class="panel-title">Tag Relations</h3></div>
+                        <div class="panel-body">
+                            <div id="chordChart">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="row">
+                        <div class="panel panel-warning">
+                            <div class="panel-heading"><h3 class="panel-title">Compared to other related tags</h3></div>
+                            <div class="panel-body">
+                                <div id="barChart1"> --questions compared to accepted answers here--
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="panel panel-warning">
+                            <div class="panel-heading"><h3 class="panel-title">Trend</h3></div>
+                            <div class="panel-body">
+                                <div id="barChart2"> --trend chart here--
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+
+    </script>
+</body>
+</html>

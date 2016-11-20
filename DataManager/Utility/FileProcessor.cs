@@ -38,9 +38,9 @@ namespace Utility
             return output;
         }
 
-        public static Dictionary<string, int> GetGraphEdges(List<string> tags)
+        public static Dictionary<string, double> GetGraphEdges(List<string> tags)
         {
-            var edges = new Dictionary<string, int>();
+            var edges = new Dictionary<string, double>();
             foreach (var tagList in tags)
             {
                 var temp = tagList.Trim('<').Trim('>').Replace("><", " ").Split(' ').OrderBy(n=>n).ToArray();
@@ -52,25 +52,26 @@ namespace Utility
                         if (edges.ContainsKey(key))
                             edges[key]++;
                         else
-                            edges.Add(key, 1);
+                            edges.Add(key, 1.0);
                     }
                 }
             }
             return edges;
         }
 
-        public static string GetJsonData(Dictionary<string, int> edges, int count)
+        public static string GetJsonData(Dictionary<string, double> edges, int count)
         {
             var nodeJson = string.Empty;
             var edgeJson = string.Empty;
-            var nodes = new Dictionary<string, int>();
+            var nodes = new Dictionary<string, double>();
 
             var topEdges = edges.OrderByDescending(e => e.Value).Take(count).ToList();
 
             //normalize Edge Value.
+            var allowedMinimumEdgeValue = 2.0;
+            var allowedMaximumEdgeValue = 7.0;
             var minEdge = topEdges.Min(e=>e.Value);
             var maxEdge = topEdges.Max(e=>e.Value);
-
             //2 - 7
             
 
@@ -80,21 +81,77 @@ namespace Utility
                 var nodeData = edge.Key.Split('|');
                 if (nodes.ContainsKey(nodeData[0])) nodes[nodeData[0]]++; else nodes.Add(nodeData[0], 1);
                 if (nodes.ContainsKey(nodeData[1])) nodes[nodeData[1]]++; else nodes.Add(nodeData[1], 1);
-                edgeTemp.Add("{'source': '" + nodeData[0] + "', 'target': '" + nodeData[1] + "', 'value': " + edge.Value + "}");
+                //edgeTemp.Add("{'source': '" + nodeData[0] + "', 'target': '" + nodeData[1] + "', 'value': " + edge.Value + "}");
             }
 
             var nodeTemp = new List<string>();
-            foreach (var node in nodes)
-                nodeTemp.Add("{'id': '" + node.Key + "', 'name': '" + node.Key + "', 'value': " + node.Value + ", 'group': " + GetGroup(node.Key) + "}");
+            var tempNodeList = nodes.ToList();
+            var tempNodeStringList = nodes.Select(n=>n.Key).ToList();
 
+            var allowedMinimumNodeValue = 10.0;
+            var allowedMaximumNodeValue = 20.0;
+            var minNode = nodes.Min(e => e.Value);
+            var maxNode = nodes.Max(e => e.Value);
+
+            foreach (var node in tempNodeList)
+            {
+                var normalizedNode = (((node.Value - minNode) / (maxNode - minNode)) * (allowedMaximumNodeValue - allowedMinimumNodeValue)) + allowedMinimumNodeValue;
+                nodeTemp.Add("{'id': '" + node.Key + "', 'name': '" + node.Key + "', 'value': " + normalizedNode + ", 'actualValue': " + node.Value + ", 'group': " + GetGroup(node.Key) + "}");
+            }
+            foreach (var edge in topEdges)
+            {
+                var normalizedEdge = (((edge.Value - minEdge)/(maxEdge - minEdge))*(allowedMaximumEdgeValue-allowedMinimumEdgeValue)) + allowedMinimumEdgeValue;
+
+                var nodeData = edge.Key.Split('|');
+                edgeTemp.Add("{'source': " + tempNodeStringList.IndexOf(nodeData[0]) + ", 'target': " + tempNodeStringList.IndexOf(nodeData[1]) + ", 'actualValue': " + edge.Value + ", 'value': " + normalizedEdge + "}");
+            }
             nodeJson = "[ " + string.Join(",", nodeTemp) + " ]";
             edgeJson = "[ " + string.Join(",", edgeTemp) + " ]";
 
-            return "{ 'nodes': " + nodeJson + ", 'links': " + edgeJson + "}";
+            return "{ 'nodes': " + nodeJson + ", 'edges': " + edgeJson + "}";
         }
+
         private static int GetGroup(string node)
         {
-            return 1;
+            var library = GetGroupedTagLibrary();
+            foreach(var group in library)
+            {
+                if (group.Value.Contains(node))
+                    return group.Key;
+            }
+            return 0;
+        }
+
+        private static Dictionary<int, HashSet<string>> GetGroupedTagLibrary()
+        {
+            var tagLibrary = new Dictionary<int, HashSet<string>>();
+
+            var webSet = new HashSet<string>();
+            var dbSet = new HashSet<string>();
+            var glSet = new HashSet<string>();
+            webSet.Add("javascript");
+            webSet.Add("php");
+            webSet.Add("html");
+            webSet.Add("css");
+            webSet.Add("xml");
+            webSet.Add("jquery");
+
+            glSet.Add("java");
+            glSet.Add("c#");
+            glSet.Add("python");
+            glSet.Add("c++");
+            glSet.Add("c");
+            glSet.Add("ruby-on-rails");
+            glSet.Add("r");
+
+            dbSet.Add("mysql");
+            dbSet.Add("sql-server");
+            dbSet.Add("postgresql");
+            dbSet.Add("mongodb");
+            tagLibrary.Add(1, webSet);
+            tagLibrary.Add(2, dbSet);
+            tagLibrary.Add(3, glSet);
+            return tagLibrary;
         }
 
         public static HashSet<string> GetLanguageTags()
