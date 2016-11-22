@@ -8,8 +8,10 @@
     <script src="js/modernizr.js"></script>
     <script src="js/custom.js"></script>
     <script src="js/c3.min.js"></script>
+    <script src="http://www.goat1000.com/tagcanvas.min.js?2.9" type="text/javascript"></script>
     <script src="js/chord.js"></script>
     <script src="js/forumSupport.js"></script>
+    <script src="js/wordChart.js"></script>
     <link href="css/bootstrap.css" rel="stylesheet" />
     <link href="css/customstyle.css" rel="stylesheet" />
     <link href="css/c3.min.css" rel="stylesheet" />
@@ -48,11 +50,22 @@
             </div>
 
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-8">
                     <div class="panel panel-success">
                         <div class="panel-heading"><h3 class="panel-title">Trend</h3></div>
                         <div class="panel-body">
                             <div id="areaChart1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="panel panel-success">
+                        <div class="panel-heading"><h3 class="panel-title">Predicted Useful Tags</h3></div>
+                        <div class="panel-body">
+                            <div id="wordChart">
+                                <ul class="weighted" style="display:none" id="weightTags"></ul>
+                                <canvas id="tagcanvas" width="300" height="235" style="float: left; margin-bottom: 20px"></canvas>
                             </div>
                         </div>
                     </div>

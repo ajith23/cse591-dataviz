@@ -161,6 +161,7 @@ window.onload = function () {
 
         Chord(visual, chord_options, matrix);
     });
+    loadWordChart(queryParamTag);
 }
 
 function buildMatrix(data) {

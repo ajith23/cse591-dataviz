@@ -70,6 +70,7 @@
     <Content Include="js\forumSupport.js" />
     <Content Include="js\network.js" />
     <Content Include="js\modernizr.js" />
+    <Content Include="js\wordChart.js" />
     <Content Include="packages.config" />
     <Content Include="js\d3\LICENSE" />
     <Content Include="css\bootstrap-theme.css.map" />

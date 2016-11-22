@@ -76,7 +76,7 @@ function loadForumSupportQandAA(tagName) {
 
 function loadForumSupportPostCount(tagName) {
     var margin = { top: 20, right: 20, bottom: 30, left: 100 },
-    width = 1000 - margin.left - margin.right,
+    width = 700 - margin.left - margin.right,
     height = 250 - margin.top - margin.bottom;
     var color = d3.scale.ordinal().range(["#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
     var parseDate = d3.time.format("%d-%b-%y").parse;
@@ -101,13 +101,13 @@ function loadForumSupportPostCount(tagName) {
 
         var select = $.grep(data, function (e) { return e.tagName == tagName });
         var temp = [];
-        console.log(select);
+        //console.log(select);
         var year = 2008;
         for (var j = 1; j <=9; j++)
             temp.push({ date: '1-Jan-' + (year.toString().substring(2)), count: parseInt(select[0][year++]) });
                 
         data = temp;
-        console.log(data);
+        //console.log(data);
         data.forEach(function (d) {
             d.date = parseDate(d.date);
             d.count = +d.count;
