@@ -1,8 +1,9 @@
-﻿function loadWordChart1(tagName)
+﻿function loadWordChart(tagName)
 {
     $.ajax({
         type: 'GET',
-        url: 'https://d81a451e.ngrok.io/topic_model?tag=' + tagName,
+        url: 'http://17edf783.ngrok.io/topic_model?tag=' + tagName,
+        //url: 'https://d81a451e.ngrok.io/topic_model?tag=' + tagName,
         contentType: 'text/plain',
         async: true,
         success(data) {
@@ -13,64 +14,6 @@
            
         }
     });
-}
-
-function loadWordChart(tagName) {
-    var s = {
-        "a": {
-            "(or": 0.051,
-            "all": 0.036,
-            "angularjs": 0.051,
-            "apply": 0.037,
-            "array": 0.286,
-            "between": 0.088,
-            "call": 0.037,
-            "check": 0.17,
-            "clipboard": 0.097,
-            "clone": 0.037,
-            "creating": 0.041,
-            "current": 0.118,
-            "date": 0.059,
-            "detect": 0.079,
-            "difference": 0.088,
-            "do": 0.546,
-            "element": 0.13,
-            "empty": 0.051,
-            "equivalent": 0.097,
-            "file": 0.059,
-            "function": 0.171,
-            "get": 0.187,
-            "hidden": 0.019,
-            "if": 0.196,
-            "javascript": 1.607,
-            "jquery": 0.523,
-            "json": 0.037,
-            "keyword": 0.107,
-            "loop": 0.075,
-            "node.js": 0.109,
-            "object": 0.301,
-            "objects": 0.056,
-            "or": 0.066,
-            "page": 0.141,
-            "property": 0.066,
-            "remove": 0.051,
-            "return": 0.082,
-            "selected": 0.079,
-            "through": 0.075,
-            "url": 0.112,
-            "use": 0.185,
-            "using": 0.041,
-            "value": 0.069,
-            "var": 0.04,
-            "vs": 0.106,
-            "without": 0.11,
-            "work": 0.097,
-            "you": 0.126,
-            "{}": 0.076
-        }
-    }
-    loadList(s);
-    renderWordChart();
 }
 
 function loadList(data)

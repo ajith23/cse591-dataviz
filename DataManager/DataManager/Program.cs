@@ -12,11 +12,16 @@ namespace DataManager
     {
         static void Main(string[] args)
         {
-            //var data = System.IO.File.ReadAllLines(@"C:\Users\ajithv\Desktop\DV-Project-Back\Top Questions\20091.csv").ToList();
+            //CreateJsonForGraph();
+            string path = @"C:\Users\ajithv\git\ajith23\cse591-dataviz\DataManager\Utility\forumSupportData.csv";
+            Utility.FileProcessor.UpdateTagsWithGroupsToFile(path);
+        }
 
-            for(var year = 2008; year <= 2016; year++)
+        static void CreateJsonForGraph()
+        {
+            for (var year = 2008; year <= 2016; year++)
             {
-                //var d = Utility.FileProcessor.GetGraphEdgesHistory();
+                Console.WriteLine("Processing " + year + "...");
                 var path = string.Format(@"C:\Users\ajithv\Desktop\DV-Project-Back\Top Questions\{0}.csv", year);
                 var tagList = Utility.FileProcessor.GetTagList(path);
 
@@ -26,15 +31,8 @@ namespace DataManager
                 //var jsonPath = string.Format(@"C:\Users\ajithv\Desktop\DV-Project-Back\Top Questions\{0}json.json", year);
                 var jsonPath = string.Format(@"C:\Users\ajithv\Desktop\DV-Project-Back\test-d3\{0}json.json", year);
                 System.IO.File.WriteAllText(jsonPath, s.Replace("'", "\""));
-
-                Console.WriteLine("-------------------- "+year+" ---------------------");
-                /*var topEdges = edges.OrderByDescending(e => e.Value).ToList();
-                for (var i = 0; i < 10; i++)
-                    Console.WriteLine("{0} \t {1}", topEdges[i].Value, topEdges[i].Key);
-                Console.WriteLine();*/
             }
-
-            Console.WriteLine("Completed");
+            Console.WriteLine("Completed.");
             Console.ReadLine();
         }
 

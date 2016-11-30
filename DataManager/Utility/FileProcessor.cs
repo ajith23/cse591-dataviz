@@ -59,7 +59,6 @@ namespace Utility
             return edges;
         }
 
-
         public static Dictionary<string, List<double>> GetGraphEdgesHistory()
         {
             var output = new Dictionary<string, List<double>>();
@@ -98,7 +97,6 @@ namespace Utility
             }
             return output;
         }
-
 
         public static string GetJsonData(Dictionary<string, double> edges, int count)
         {
@@ -195,9 +193,74 @@ namespace Utility
             return tagLibrary;
         }
 
+        public static void UpdateTagsWithGroupsToFile(string path)
+        {
+            var dictionary = new Dictionary<string, int>();
+            var lines = System.IO.File.ReadAllLines(path);
+
+            var temp = lines[0].Split(',');
+            if (temp.Length == 3)
+            {
+                lines[0] += ",Group";
+                System.IO.File.WriteAllLines(path, lines);
+            }
+            for (var i = 1; i < lines.Length; i++)
+            {
+                var lineData = lines[i].Split(',');
+                if(lineData.Length == 3)
+                {
+                    var valid = false;
+                    while (!valid)
+                    {
+                        Console.Write("Enter group for {0} :", lineData[0]);
+                        var input = Console.ReadLine();
+                        var group = 0;
+                        if(int.TryParse(input, out group) && group > 0 && group < 8)
+                        {
+                            lines[i] += ",\"" + group + "\"";
+                            System.IO.File.WriteAllLines(path, lines);
+                            valid = true;
+                        }
+                        else if (input.Trim()== string.Empty)
+                        {
+                            Console.WriteLine("{0} more to go.", lines.Length - i);
+                            var print = @"1 = WebTechnology
+2 = Database
+3 = SourceControl
+4 = Language
+5 = Concept
+6 = Library
+7 = Tool";
+                            Console.WriteLine(print);
+                            //valid = true;
+                        }
+                        else
+                        {
+                            Console.Write("Invalid Input.");
+                        }
+                    }
+                }
+                //dictionary.Add(lines[i].Split(',')[0], Convert.ToInt32(line.Split(',')[1]));
+            }
+            //var buffer = new StringBuilder();
+
+            //return dictionary;
+        }
+
         public static HashSet<string> GetLanguageTags()
         {
             throw new NotImplementedException();
         }
+    }
+
+    public enum TagGroup
+    {
+        WebTechnology = 1,
+        Database = 2,
+        SourceControl = 3,
+        Language = 4,
+        Concept = 5,
+        Library = 6,
+        Tool = 7
     }
 }
