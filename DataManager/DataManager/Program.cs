@@ -12,24 +12,26 @@ namespace DataManager
     {
         static void Main(string[] args)
         {
-            //CreateJsonForGraph();
-            string path = @"C:\Users\ajithv\git\ajith23\cse591-dataviz\DataManager\Utility\forumSupportData.csv";
-            Utility.FileProcessor.UpdateTagsWithGroupsToFile(path);
+            CreateJsonForGraph();
+            //string path = @"C:\Users\ajithv\git\ajith23\cse591-dataviz\DataManager\Utility\forumSupportData.csv";
+            //Utility.FileProcessor.UpdateTagsWithGroupsToFile(path);
         }
 
         static void CreateJsonForGraph()
         {
-            for (var year = 2008; year <= 2016; year++)
+            for (var year = 2016; year <= 2016; year++)
             {
                 Console.WriteLine("Processing " + year + "...");
-                var path = string.Format(@"C:\Users\ajithv\Desktop\DV-Project-Back\Top Questions\{0}.csv", year);
+                //var path = string.Format(@"C:\Users\ajithv\Desktop\DV-Project-Back\Top Questions\{0}.csv", year);
+                var path = string.Format(@"C:\Users\avimalch\Downloads\{0}.csv", year);
+
                 var tagList = Utility.FileProcessor.GetTagList(path);
 
                 var edges = Utility.FileProcessor.GetGraphEdges(tagList);
                 var s = Utility.FileProcessor.GetJsonData(edges, 50);
 
                 //var jsonPath = string.Format(@"C:\Users\ajithv\Desktop\DV-Project-Back\Top Questions\{0}json.json", year);
-                var jsonPath = string.Format(@"C:\Users\ajithv\Desktop\DV-Project-Back\test-d3\{0}json.json", year);
+                var jsonPath = string.Format(@"C:\Users\avimalch\git\cse591-dataviz\dv-web-app\WebApp\data\{0}json.json", year);
                 System.IO.File.WriteAllText(jsonPath, s.Replace("'", "\""));
             }
             Console.WriteLine("Completed.");

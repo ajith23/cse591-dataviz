@@ -7,6 +7,14 @@ var queryParamTag = getRequestParam()["tag"];
 var labelArray = [];
 
 var rotation = -0;
+var colorPalatte = {};
+var defaultPalatte = ["#7fc97f", "#beaed4", "#fdc086", "#ffff99", "#386cb0", "#f0027f", "#bf5b17", "#666666"];
+colorPalatte["javascript"] = ['#8df6a0', '#67f481', '#41f161', '#1bee42', '#10d133', '#0DB12A', '#D6D6D6', '#CB6B1E', '#C2C2C2', '#ADADAD', '#949394'];
+colorPalatte["arrays"] = ['#957ab8', '#9269C8', '#949394', '#CB6B1E'];
+colorPalatte["java"] = ['#eaa771', '#949394', '#957ab8', '#10d133', '#0DB12A', '#CB6B1E', '#9269C8'];
+colorPalatte["ios"] = ['#957ab8', '#3ba5e3', '#9269C8', '#1A7DB6', '#0DB12A'];
+//colorPalatte.push(javascriptcolors);
+var currentColorPalatte = colorPalatte[queryParamTag] == null ? defaultPalatte :colorPalatte[queryParamTag];
 
 function Chord(container, options, matrix) {
 
@@ -16,8 +24,10 @@ function Chord(container, options, matrix) {
         height: 460,
         rotation: 0,
         textgap: 26,
-        colors: ["#7fc97f", "#beaed4", "#fdc086", "#ffff99", "#386cb0", "#f0027f", "#bf5b17", "#666666"]
+        colors: currentColorPalatte //["#7fc97f", "#beaed4", "#fdc086", "#ffff99", "#386cb0", "#f0027f", "#bf5b17", "#666666"]
     };
+
+    
 
     // add options to the chord configuration object
     if (options) {
@@ -75,6 +85,7 @@ function Chord(container, options, matrix) {
     g.append("svg:path")
         .style("fill", function (d) { return fill(d.index); })
         .style("stroke", function (d) { return fill(d.index); })
+        .style("font-weight", 600)
         .attr("id", function (d, i) { return "group" + d.index; })
         .attr("d", d3.svg.arc().innerRadius(innerRadius).outerRadius(outerRadius).startAngle(startAngle).endAngle(endAngle))
         .on("mouseover", fade(.1))
@@ -83,6 +94,7 @@ function Chord(container, options, matrix) {
     g.append("svg:text")
         .each(function (d) { d.angle = ((d.startAngle + d.endAngle) / 2) + offset; })
         .attr("dy", ".35em")
+        .attr("stroke", function (d) { return fill(d.index); })
         .attr("text-anchor", function (d) { return d.angle > Math.PI ? "end" : null; })
         .attr("transform", function (d) {
             return "rotate(" + (d.angle * 180 / Math.PI - 90) + ")"
@@ -156,7 +168,7 @@ window.onload = function () {
         var chord_options = {
             "gnames": labelArray,
             "rotation": rotation,
-            "colors": ["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]
+            "colors": currentColorPalatte
         };
 
         Chord(visual, chord_options, matrix);
@@ -178,10 +190,19 @@ function buildMatrix(data) {
     var pointArray = [];
     var dataArray = [];
     for (var i = 0; i < targets.length; i++) {
-        dataArray.push({ 'label': data.nodes[targets[i].target].id, 'value': parseFloat(data.nodes[targets[i].target].actualValue) });
+
+        var dataValue = parseFloat(data.nodes[targets[i].target].actualValue);
+        while ($.grep(dataArray, function (e) { return e.value == dataValue }).length != 0) {
+            dataValue+= 0.1;
+        }
+        dataArray.push({ 'label': data.nodes[targets[i].target].id, 'value': dataValue });
     }
     for (var i = 0; i < sources.length; i++) {
-        dataArray.push({ 'label': data.nodes[sources[i].source].id, 'value': parseFloat(data.nodes[sources[i].source].actualValue) });
+        var dataValue = parseFloat(data.nodes[sources[i].source].actualValue);
+        while ($.grep(dataArray, function (e) { return e.value == dataValue }).length != 0) {
+            dataValue += 0.1;
+        }
+        dataArray.push({ 'label': data.nodes[sources[i].source].id, 'value': dataValue });
     }
 
     dataArray.sort(function (a, b) {

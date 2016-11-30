@@ -2,7 +2,8 @@
 var h = 600;
 var linkDistance = 80;
 
-var colors = d3.scale.category10();
+//var colors = d3.scale.category10();
+var colors = ['#000000', '#949394','#E84681','#AE1716','#9269C8','#CB6B1E','#0DB12A','#1A7DB6']
 
 function loadNetwork(year) {
     var dataFile = 'data/' + year + 'json.json';
@@ -46,7 +47,7 @@ function buildNetwork(dataset) {
       .append("circle")
       .attr({ "r": function (d) { return (d.value); } })
       .on("dblclick", function (d) { window.location.href = "/details.html?year=" + $('#yearSelector button.active').html() + "&tag=" + d.name; })
-      .style("fill", function (d, i) { return colors(d.group); })
+      .style("fill", function (d, i) { return colors[d.group]; })
       .call(force.drag)
 
 

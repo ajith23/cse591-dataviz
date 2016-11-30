@@ -122,7 +122,7 @@ namespace Utility
                 if (nodes.ContainsKey(nodeData[1])) nodes[nodeData[1]]++; else nodes.Add(nodeData[1], 1);
                 //edgeTemp.Add("{'source': '" + nodeData[0] + "', 'target': '" + nodeData[1] + "', 'value': " + edge.Value + "}");
             }
-
+            
             var nodeTemp = new List<string>();
             var tempNodeList = nodes.ToList();
             var tempNodeStringList = nodes.Select(n=>n.Key).ToList();
@@ -152,12 +152,9 @@ namespace Utility
 
         private static int GetGroup(string node)
         {
-            var library = GetGroupedTagLibrary();
-            foreach(var group in library)
-            {
-                if (group.Value.Contains(node))
-                    return group.Key;
-            }
+            var library = GetTagGroupDictionary();
+            if (library.ContainsKey(node))
+                return library[node];
             return 0;
         }
 
@@ -247,9 +244,60 @@ namespace Utility
             //return dictionary;
         }
 
-        public static HashSet<string> GetLanguageTags()
+        public static Dictionary<string, int> GetTagGroupDictionary()
         {
-            throw new NotImplementedException();
+            var tagDictionary = new Dictionary<string, int>();
+            tagDictionary.Add("javascript", (int)TagGroup.WebTechnology);
+            tagDictionary.Add("jquery", (int)TagGroup.Library);
+            tagDictionary.Add("css", (int)TagGroup.WebTechnology);
+            tagDictionary.Add("html", (int)TagGroup.WebTechnology);
+            tagDictionary.Add("ios", (int)TagGroup.Library);
+            tagDictionary.Add("swift", (int)TagGroup.Language);
+            tagDictionary.Add("c++", (int)TagGroup.Language);
+            tagDictionary.Add("c++11", (int)TagGroup.Language);
+            tagDictionary.Add("android", (int)TagGroup.Library);
+            tagDictionary.Add("java", (int)TagGroup.Language);
+            tagDictionary.Add(".net", (int)TagGroup.Library);
+            tagDictionary.Add("c#", (int)TagGroup.Language);
+            tagDictionary.Add("angularjs", (int)TagGroup.Library);
+            tagDictionary.Add("objective-c", (int)TagGroup.Language);
+            tagDictionary.Add("mysql", (int)TagGroup.Database);
+            tagDictionary.Add("php", (int)TagGroup.WebTechnology);
+            tagDictionary.Add("android-studio", (int)TagGroup.Tool);
+            tagDictionary.Add("python", (int)TagGroup.Language);
+            tagDictionary.Add("python-3.x", (int)TagGroup.Language);
+            tagDictionary.Add("java-8", (int)TagGroup.Language);
+            tagDictionary.Add("c", (int)TagGroup.Language);
+            tagDictionary.Add("python-2.7", (int)TagGroup.Language);
+            tagDictionary.Add("node.js", (int)TagGroup.Library);
+            tagDictionary.Add("xcode", (int)TagGroup.Tool);
+            tagDictionary.Add("asp.net", (int)TagGroup.WebTechnology);
+            tagDictionary.Add("css3", (int)TagGroup.WebTechnology);
+            tagDictionary.Add("numpy", (int)TagGroup.Library);
+            tagDictionary.Add("c++14", (int)TagGroup.Language);
+            tagDictionary.Add("sql", (int)TagGroup.Database);
+            tagDictionary.Add("sql-server", (int)TagGroup.Database);
+            tagDictionary.Add("templates", (int)TagGroup.Concept);
+            tagDictionary.Add("pandas", (int)TagGroup.Library);
+            tagDictionary.Add("pointers", (int)TagGroup.Concept);
+            tagDictionary.Add("angular2", (int)TagGroup.Library);
+            tagDictionary.Add("typescript", (int)TagGroup.Library);
+            tagDictionary.Add("list", (int)TagGroup.Concept);
+            tagDictionary.Add("language-lawyer", (int)TagGroup.Concept);
+            tagDictionary.Add("arrays", (int)TagGroup.Concept);
+            tagDictionary.Add("string", (int)TagGroup.Concept);
+            tagDictionary.Add("linq", (int)TagGroup.Database);
+            tagDictionary.Add("reactjs", (int)TagGroup.Library);
+            tagDictionary.Add("android-layout", (int)TagGroup.Library);
+            tagDictionary.Add("iphone", (int)TagGroup.Tool);
+            tagDictionary.Add("spring", (int)TagGroup.WebTechnology);
+            tagDictionary.Add("ecmascript-6", (int)TagGroup.Library);
+            tagDictionary.Add("django", (int)TagGroup.Library);
+            tagDictionary.Add("java-stream", (int)TagGroup.Library);
+            tagDictionary.Add("ruby", (int)TagGroup.Language);
+            tagDictionary.Add("ruby-on-rails", (int)TagGroup.WebTechnology);
+
+            return tagDictionary;
         }
     }
 
