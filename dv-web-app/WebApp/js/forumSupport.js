@@ -1,5 +1,19 @@
 ﻿
-function loadForumSupportQandAA(tagName) {
+var colorsLight = ['#555555', '#949394', '#E84681', '#AE1716', '#9269C8', '#CB6B1E', '#0DB12A', '#1A7DB6']
+var colorsDark = ['#000000', '#696869', '#943457', '#771010', '#614885', '#864513', '#076F1A', '#115173']
+var palatte =
+    [
+        ['#000000', '#555555'],
+        ['#696869', '#949394'],
+        ['#943457', '#E84681'],
+        ['#771010', '#AE1716'],
+        ['#614885', '#9269C8'],
+        ['#864513', '#CB6B1E'],
+        ['#076F1A', '#0DB12A'],
+        ['#115173', '#1A7DB6']
+    ]
+
+function loadForumSupportQandAA(tagName, group) {
 
     var margin = { top: 20, right: 20, bottom: 30, left: 40 },
         width = 500 - margin.left - margin.right,
@@ -8,7 +22,7 @@ function loadForumSupportQandAA(tagName) {
     var x0 = d3.scale.ordinal().rangeRoundBands([0, width], .1);
     var x1 = d3.scale.ordinal();
     var y = d3.scale.linear().range([height, 0]);
-    var color = d3.scale.ordinal().range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+    var color = d3.scale.ordinal().range(palatte[group]);
     var xAxis = d3.svg.axis().scale(x0).orient("bottom");
     var yAxis = d3.svg.axis() .scale(y).orient("left").tickFormat(d3.format(".2s"));
 
@@ -21,7 +35,16 @@ function loadForumSupportQandAA(tagName) {
     var dataFile = 'data/forumSupportData.csv';
     d3.csv(dataFile, function (error, data) {
         if (error) throw error;
-        data = data.slice(0,10);
+        var filteredData = [];
+
+        for (var i = 0; i < data.length; i++) {
+            if (data[i].Group == group)
+                filteredData.push({ "Question Count": data[i]["Question Count"], "Accepted Answer Count": data[i]["Accepted Answer Count"], "TagName" : data[i].TagName });
+            if(filteredData.length == 7) break;
+        }
+
+        data = filteredData;
+        //data = data.slice(0,10);
         var fieldNames = d3.keys(data[0]).filter(function (key) { return key !== "TagName"; });
 
         var index = 0;
@@ -74,11 +97,12 @@ function loadForumSupportQandAA(tagName) {
     });
 }
 
-function loadForumSupportPostCount(tagName) {
+function loadForumSupportPostCount(tagName, group) {
     var margin = { top: 20, right: 20, bottom: 30, left: 100 },
     width = 700 - margin.left - margin.right,
     height = 250 - margin.top - margin.bottom;
     var color = d3.scale.ordinal().range(["#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+
     var parseDate = d3.time.format("%d-%b-%y").parse;
     var x = d3.time.scale().range([0, width]);
     var y = d3.scale.linear().range([height, 0]);
@@ -119,7 +143,7 @@ function loadForumSupportPostCount(tagName) {
         svg.append("path")
             .datum(data)
             .attr("class", "area")
-            .attr("d", area).style("fill", function (d) { return color(d.name); });;
+            .attr("d", area).style("fill", function (d) { return colorsLight[group]; });;
 
         svg.append("g")
             .attr("class", "x axis")

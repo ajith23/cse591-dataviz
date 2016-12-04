@@ -2,10 +2,11 @@
 
 var year = getRequestParam()["year"];
 var queryParamTag = getRequestParam()["tag"];
-
+var queryParamGroup = getRequestParam()["group"];
+if (!queryParamGroup) queryParamGroup = 0;
 
 var labelArray = [];
-
+var groups = ["Other","Web Technology", "Database", "Source Control", "Programming Language", "Concept", "Library", "Tool"];
 var rotation = -0;
 var colorPalatte = {};
 var defaultPalatte = ["#7fc97f", "#beaed4", "#fdc086", "#ffff99", "#386cb0", "#f0027f", "#bf5b17", "#666666"];
@@ -156,9 +157,11 @@ function Chord(container, options, matrix) {
 
 window.onload = function () {
     $('#detailsHeader').html(queryParamTag);
+    $('#detailsGroupHeader').html(groups[queryParamGroup]);
+    $('#detailsHeader').addClass('headerNode' + queryParamGroup);
     $('#tagRelationsTitle').html('Tag Relations for ' + queryParamTag + ' in ' + year);
-    loadForumSupportQandAA(queryParamTag);
-    loadForumSupportPostCount(queryParamTag);
+    loadForumSupportQandAA(queryParamTag, queryParamGroup);
+    loadForumSupportPostCount(queryParamTag, queryParamGroup);
 
     var dataFile = 'data/' + year + 'json.json';
     d3.json(dataFile, function (error, data) {
@@ -173,7 +176,7 @@ window.onload = function () {
 
         Chord(visual, chord_options, matrix);
     });
-    loadWordChart(queryParamTag);
+    loadWordChart(queryParamTag, queryParamGroup);
 }
 
 function buildMatrix(data) {

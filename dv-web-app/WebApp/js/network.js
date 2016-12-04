@@ -46,7 +46,7 @@ function buildNetwork(dataset) {
       .enter()
       .append("circle")
       .attr({ "r": function (d) { return (d.value); } })
-      .on("dblclick", function (d) { window.location.href = "/details.html?year=" + $('#yearSelector button.active').html() + "&tag=" + d.name; })
+      .on("dblclick", function (d) { window.location.href = "/details.html?year=" + $('#yearSelector button.active').html() + "&tag=" + d.name + "&group=" + d.group; })
       .style("fill", function (d, i) { return colors[d.group]; })
       .call(force.drag)
 

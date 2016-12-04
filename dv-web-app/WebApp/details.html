@@ -27,7 +27,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">DV Project</a>
+                <a class="navbar-brand" href="#">SO Tag Relation Analysis</a>
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
@@ -42,17 +42,15 @@
 
             <div class="row">
                 <br />
-                <h4>Stack Overflow - Unbound (Visual Analytics)</h4>
+                <h4>Detailed Analysis of <b><span id="detailsGroupHeader"></span></b> tag <span id="detailsHeader" class="detailsHeader"></span></h4>
             </div>
 
-            <div class="row">
-                <h5><b><span id="detailsHeader"></span></b></h5>
-            </div>
+
 
             <div class="row">
                 <div class="col-lg-8">
                     <div class="panel panel-success">
-                        <div class="panel-heading"><h3 class="panel-title">Trend</h3></div>
+                        <div class="panel-heading"><h3 class="panel-title">Trend (Count of posts over time)</h3></div>
                         <div class="panel-body">
                             <div id="areaChart1">
                             </div>
@@ -76,7 +74,9 @@
                     <div class="panel panel-info">
                         <div class="panel-heading"><h3 class="panel-title" id="tagRelationsTitle">Tag Relations</h3></div>
                         <div class="panel-body">
-                            <div id="chordChart">
+                            <div id="chordChart"></div>
+                            <div class="explanation">
+                                <span class="explanationTitle"> The chord diagram </span> represents a detailed correlation of a given tag with other tags in the network. The thickness shows the strength of the connection between tags. This diagram also visualizes how tags from different categories are interrelated.
                             </div>
                         </div>
                     </div>
@@ -85,7 +85,9 @@
                     <div class="panel panel-warning">
                         <div class="panel-heading"><h3 class="panel-title">Compared to other related tags</h3></div>
                         <div class="panel-body">
-                            <div id="barChart1">
+                            <div id="barChart1"></div>
+                            <div class="explanation">
+                                <span class="explanationTitle"> The column chart</span> allows users to compare between different tags that belong to the same category. Tags can be compared based on the number of posts and accepted answers.
                             </div>
                         </div>
                     </div>

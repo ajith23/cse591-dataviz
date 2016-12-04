@@ -11,3 +11,97 @@
 	font-weight : 600;
 	font-family : 'arial'
 }
+
+.networkLegend {
+    display: table;
+    padding-bottom: 10px;
+    margin: auto;
+}
+.legendText {
+    display: table-cell;
+    padding-left: 3px;
+    padding-right: 8px;
+}
+.legendNode {
+    width: 20px;
+    height: 20px;
+    border-radius: 24px;
+    display: table-cell;
+}
+.legendNodeWe {
+    border: solid 1px #949394;
+    background: #949394;
+}
+.legendNodeDa {
+    border: solid 1px #E84681;
+    background: #E84681;
+}
+.legendNodeSo {
+    border: solid 1px #AE1716;
+    background: #AE1716;
+}
+.legendNodeLa {
+    border: solid 1px #9269C8;
+    background: #9269C8;
+}
+.legendNodeCo {
+    border: solid 1px #CB6B1E;
+    background: #CB6B1E;
+}
+.legendNodeLi {
+    border: solid 1px #0DB12A;
+    background: #0DB12A;
+}
+.legendNodeTo {
+    border: solid 1px #1A7DB6;
+    background: #1A7DB6;
+}
+
+.explanation {
+    font-size: 14px;
+}
+.explanationTitle {
+    font-size: 16px;
+    color: #115173;
+}
+
+.detailsHeader {
+    color: white;
+    font-weight: 600;
+    padding :2px 6px;
+    border-radius: 4px;
+}
+
+.headerNode0 {
+    border: solid 1px #000;
+    background: #000;
+}
+
+.headerNode1 {
+    border: solid 1px #949394;
+    background: #949394;
+}
+.headerNode2 {
+    border: solid 1px #E84681;
+    background: #E84681;
+}
+.headerNode3 {
+    border: solid 1px #AE1716;
+    background: #AE1716;
+}
+.headerNode4 {
+    border: solid 1px #9269C8;
+    background: #9269C8;
+}
+.headerNode5 {
+    border: solid 1px #CB6B1E;
+    background: #CB6B1E;
+}
+.headerNode6 {
+    border: solid 1px #0DB12A;
+    background: #0DB12A;
+}
+.headerNode7 {
+    border: solid 1px #1A7DB6;
+    background: #1A7DB6;
+}

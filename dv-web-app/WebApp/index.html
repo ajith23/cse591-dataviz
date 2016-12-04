@@ -24,7 +24,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">DV Project</a>
+                <a class="navbar-brand" href="#">SO Tag Relation Analysis</a>
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
@@ -39,7 +39,11 @@
 
             <div class="row">
                 <br />
-                <h4>Stack Overflow - Unbound (Visual Analytics)</h4>
+                <h4>Choose the right <b>Tech Stack</b> to build your system.</h4>
+                <h5>
+                    Online forums provide a medium for users to share and gain knowledge. Here is a look at how technologies have evolved over time in Stack Overflow.
+                    The visualization below helps users <b>select a tech stack</b> by displaying the trending technologies, thus indicating that choosing a popular technology woudl gather more support from reputed users.
+                </h5>
             </div>
 
             <div class="row">
@@ -50,7 +54,7 @@
                             <div id="yearSelector" class="btn-group" role="group" aria-label="...">
                                 <span class="input-group-addon">YEAR</span>
                                 <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default active">2008</button>
+                                    <button type="button" class="btn btn-default">2008</button>
                                     <button type="button" class="btn btn-default">2009</button>
                                     <button type="button" class="btn btn-default">2010</button>
                                     <button type="button" class="btn btn-default">2011</button>
@@ -58,18 +62,45 @@
                                     <button type="button" class="btn btn-default">2013</button>
                                     <button type="button" class="btn btn-default">2014</button>
                                     <button type="button" class="btn btn-default">2015</button>
-                                    <button type="button" class="btn btn-default">2016</button>
+                                    <button type="button" class="btn btn-default active">2016</button>
                                 </span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <br />
+
             <div class="row">
                 <div class="panel panel-info">
                     <div class="panel-heading"><h3 class="panel-title">Tag relations - Stack Overflow in <b><span id="yearInTitle"></span></b></h3></div>
                     <div class="panel-body" id="networkChartContainerDiv">
+                        <div class="networkLegend">
+                            <div class="legendNode legendNodeWe"></div><div class="legendText">Web Technology</div>
+                            <div class="legendNode legendNodeDa"></div><div class="legendText">Database</div>
+                            <div class="legendNode legendNodeLa"></div><div class="legendText">Language</div>
+                            <div class="legendNode legendNodeCo"></div><div class="legendText">Concept</div>
+                            <div class="legendNode legendNodeLi"></div><div class="legendText">Library</div>
+                            <div class="legendNode legendNodeTo"></div><div class="legendText">Tool</div>
+                            <div class="legendNode legendNodeSo"></div><div class="legendText">Source Control</div>
+                        </div>
+                        <div id="networkChart"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="panel panel-success">
+                    <div class="panel-heading"><h3 class="panel-title">Explanation</h3></div>
+                    <div class="panel-body">
+                        <div class="explanation">
+                            <span class="explanationTitle">The network</span> depicts relationships between the 50 most popular tags used in <b>Stack Overflow</b> for a year. <br />
+                            These tags are divided into <b>seven</b> categories. <br />
+                            The graph shows cohesion between tags in the same category as well as correlation between tags belonging to different categories. <br />
+                            <br />
+                            <span class="explanationTitle"> Observation </span><br />
+                            As seen in the chart below, arrays lie in the concept category and are related to javascript, java as well as c. <br />
+                            The diagram also captures the change in relationships over the years. While the popularity of Object Oriented Programming languages and Databases have significantly reduced between 2008 and 2016, scripting languages have gained prevalence.
+                        </div>
                         <div id="networkChart"></div>
                     </div>
                 </div>

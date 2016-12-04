@@ -1,4 +1,4 @@
-﻿function loadWordChart(tagName)
+﻿function loadWordChart(tagName, queryParamGroup)
 {
     $.ajax({
         type: 'GET',
