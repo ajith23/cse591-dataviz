@@ -2,13 +2,12 @@
 {
     $.ajax({
         type: 'GET',
-        url: 'http://17edf783.ngrok.io/topic_model?tag=' + tagName,
-        //url: 'https://d81a451e.ngrok.io/topic_model?tag=' + tagName,
+        url: 'http://d6e302d0.ngrok.io/topic_model?tag=' + tagName,
         contentType: 'text/plain',
         async: true,
         success(data) {
             loadList(data);
-            renderWordChart();
+            renderWordChart(queryParamGroup);
         },
         error(error) {
            
@@ -22,12 +21,15 @@ function loadList(data)
         $("#weightTags").append('<li><a href="#" data-weight="' + parseInt(data.a[name]) + '">' + name + '</a></li>');
 }
 
-function renderWordChart() {
+var colorsLightWord = ['#555555', '#949394', '#E84681', '#AE1716', '#9269C8', '#CB6B1E', '#0DB12A', '#1A7DB6'];
+var colorsDarkWord = ['#000000', '#696869', '#943457', '#771010', '#614885', '#864513', '#076F1A', '#115173'];
+
+function renderWordChart(queryParamGroup) {
     TagCanvas.interval = 20;
     TagCanvas.textFont = 'sans-serif';
-    TagCanvas.textColour = '#d0743c';
+    TagCanvas.textColour = colorsLightWord[queryParamGroup];//'#d0743c';
     TagCanvas.textHeight = 18;
-    TagCanvas.outlineColour = '#d0743c';
+    TagCanvas.outlineColour = colorsDarkWord[queryParamGroup];//'#d0743c';
     TagCanvas.outlineThickness = 1;
     TagCanvas.maxSpeed = 0.04;
     TagCanvas.minBrightness = 0.1;
