@@ -149,12 +149,16 @@ namespace Utility
 
             return "{ 'nodes': " + nodeJson + ", 'edges': " + edgeJson + "}";
         }
-
+        public static HashSet<string> NotFoundSet = new HashSet<string>();
         private static int GetGroup(string node)
         {
             var library = GetTagGroupDictionary();
             if (library.ContainsKey(node))
                 return library[node];
+            else
+            {
+                NotFoundSet.Add(string.Format("tagDictionary.Add(\"{0}\", (int)TagGroup);", node));
+            }
             return 0;
         }
 
@@ -212,7 +216,7 @@ namespace Utility
                         Console.Write("Enter group for {0} :", lineData[0]);
                         var input = Console.ReadLine();
                         var group = 0;
-                        if(int.TryParse(input, out group) && group > 0 && group < 8)
+                        if(int.TryParse(input, out group) && group >= 0 && group < 8)
                         {
                             lines[i] += ",\"" + group + "\"";
                             System.IO.File.WriteAllLines(path, lines);
@@ -221,7 +225,8 @@ namespace Utility
                         else if (input.Trim()== string.Empty)
                         {
                             Console.WriteLine("{0} more to go.", lines.Length - i);
-                            var print = @"1 = WebTechnology
+                            var print = @"0 = Other
+1 = WebTechnology
 2 = Database
 3 = SourceControl
 4 = Language
@@ -297,12 +302,88 @@ namespace Utility
             tagDictionary.Add("ruby", (int)TagGroup.Language);
             tagDictionary.Add("ruby-on-rails", (int)TagGroup.WebTechnology);
 
+            tagDictionary.Add("asp.net-mvc", (int)TagGroup.WebTechnology);
+            tagDictionary.Add("asp.net-mvc-4", (int)TagGroup.WebTechnology);
+            tagDictionary.Add("ios9", (int)TagGroup.Library);
+            tagDictionary.Add("ios8", (int)TagGroup.Library);
+            tagDictionary.Add("ios7", (int)TagGroup.Library);
+            tagDictionary.Add("laravel", (int)TagGroup.Library);
+            tagDictionary.Add("laravel-4", (int)TagGroup.Library);
+            tagDictionary.Add("swift2", (int)TagGroup.Language);
+            
+            tagDictionary.Add("xcode6", (int)TagGroup.Tool);
+            tagDictionary.Add("entity-framework", (int)TagGroup.Concept);
+            tagDictionary.Add("android-5.0-lollipop", (int)TagGroup.Library);
+            tagDictionary.Add("ruby-on-rails-4", (int)TagGroup.WebTechnology);
+            tagDictionary.Add("twitter-bootstrap", (int)TagGroup.Library);
+            tagDictionary.Add("html5", (int)TagGroup.WebTechnology);
+            tagDictionary.Add("eclipse", (int)TagGroup.Tool);
+            tagDictionary.Add("cocoa-touch", (int)TagGroup.Library);
+            tagDictionary.Add("r", (int)TagGroup.Language);
+            tagDictionary.Add("ggplot2", (int)TagGroup.Library);
+
+            tagDictionary.Add("winforms", (int)TagGroup.Library);
+            tagDictionary.Add("tsql", (int)TagGroup.Database);
+            tagDictionary.Add("database", (int)TagGroup.Concept);
+            tagDictionary.Add("sql-server-2005", (int)TagGroup.Database);
+            tagDictionary.Add("vb.net", (int)TagGroup.Library);
+            tagDictionary.Add("ajax", (int)TagGroup.Concept);
+            tagDictionary.Add("windows", (int)TagGroup.Tool);
+            tagDictionary.Add("swing", (int)TagGroup.Library);
+            tagDictionary.Add("generics", (int)TagGroup.Concept);
+            tagDictionary.Add("svn", (int)TagGroup.SourceControl);
+            tagDictionary.Add("version-control", (int)TagGroup.SourceControl);
+            tagDictionary.Add("visual-studio", (int)TagGroup.Tool);
+            tagDictionary.Add("visual-studio-2008", (int)TagGroup.Tool);
+            tagDictionary.Add("stl", (int)TagGroup.Other);
+            tagDictionary.Add("oracle", (int)TagGroup.Database);
+            tagDictionary.Add("cocoa", (int)TagGroup.Library);
+            tagDictionary.Add("xml", (int)TagGroup.WebTechnology);
+            tagDictionary.Add("wpf", (int)TagGroup.Library);
+            tagDictionary.Add("linq-to-sql", (int)TagGroup.Database);
+            tagDictionary.Add("winapi", (int)TagGroup.Other);
+            tagDictionary.Add("reflection", (int)TagGroup.Concept);
+            tagDictionary.Add("multithreading", (int)TagGroup.Concept);
+            tagDictionary.Add("xaml", (int)TagGroup.Language);
+            tagDictionary.Add("hibernate", (int)TagGroup.Library);
+            tagDictionary.Add("dom", (int)TagGroup.WebTechnology);
+            tagDictionary.Add("git", (int)TagGroup.SourceControl);
+            tagDictionary.Add("linux", (int)TagGroup.Tool);
+            tagDictionary.Add("ruby-on-rails-3", (int)TagGroup.WebTechnology);
+            tagDictionary.Add("ipad", (int)TagGroup.Tool);
+            tagDictionary.Add("visual-studio-2010", (int)TagGroup.Tool);
+            tagDictionary.Add("jquery-ui", (int)TagGroup.Library);
+            tagDictionary.Add("jpa", (int)TagGroup.Library);
+            tagDictionary.Add("uitableview", (int)TagGroup.Other);
+            tagDictionary.Add("bash", (int)TagGroup.Other);
+            tagDictionary.Add("shell", (int)TagGroup.Other);
+            tagDictionary.Add("boost", (int)TagGroup.Other);
+            tagDictionary.Add("asp.net-mvc-3", (int)TagGroup.WebTechnology);
+            tagDictionary.Add("github", (int)TagGroup.SourceControl);
+            tagDictionary.Add("razor", (int)TagGroup.WebTechnology);
+            tagDictionary.Add("backbone.js", (int)TagGroup.Library);
+            tagDictionary.Add("express", (int)TagGroup.Other);
+            tagDictionary.Add("android-fragments", (int)TagGroup.Other);
+            tagDictionary.Add("matplotlib", (int)TagGroup.Library);
+            tagDictionary.Add("ios6", (int)TagGroup.Library);
+            tagDictionary.Add("maven", (int)TagGroup.Tool);
+            tagDictionary.Add("angularjs-directive", (int)TagGroup.WebTechnology);
+            tagDictionary.Add("twitter-bootstrap-3", (int)TagGroup.Library);
+            tagDictionary.Add("gradle", (int)TagGroup.Other);
+            tagDictionary.Add("angular-ui-router", (int)TagGroup.Library);
+            tagDictionary.Add("recyclerview", (int)TagGroup.Other);
+            tagDictionary.Add("android-gradle", (int)TagGroup.Other);
+            tagDictionary.Add("laravel-5", (int)TagGroup.Library);
+            tagDictionary.Add("material-design", (int)TagGroup.Concept);
+
+
             return tagDictionary;
         }
     }
 
     public enum TagGroup
     {
+        Other = 0,
         WebTechnology = 1,
         Database = 2,
         SourceControl = 3,

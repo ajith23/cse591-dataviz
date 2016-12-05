@@ -56,6 +56,10 @@
     border: solid 1px #1A7DB6;
     background: #1A7DB6;
 }
+.legendNodeOt {
+    border: solid 1px #000;
+    background: #000;
+}
 
 .explanation {
     font-size: 14px;

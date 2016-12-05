@@ -38,7 +38,7 @@ function loadForumSupportQandAA(tagName, group) {
         var filteredData = [];
 
         for (var i = 0; i < data.length; i++) {
-            if (data[i].Group == group)
+            if (data[i].Group == group || (group == 0 && !data[i].Group))
                 filteredData.push({ "Question Count": data[i]["Question Count"], "Accepted Answer Count": data[i]["Accepted Answer Count"], "TagName" : data[i].TagName });
             if(filteredData.length == 7) break;
         }
@@ -56,7 +56,12 @@ function loadForumSupportQandAA(tagName, group) {
         x1.domain(fieldNames).rangeRoundBands([0, x0.rangeBand()]);
         y.domain([0, d3.max(data, function (d) { return d3.max(d.ages, function (d) { return d.value; }); })]);
 
-        svg.append("g").attr("class", "x axis").attr("transform", "translate(0," + height + ")").call(xAxis);
+        svg.append("g").attr("class", "x axis").attr("transform", "translate(0," + height+ ")").call(xAxis).selectAll("text")
+            .attr("y", 15)
+            .attr("x", -10)
+            .attr("dy", ".35em")
+            .attr("transform", "rotate(-8)");
+
         svg.append("g").attr("class", "y axis").call(yAxis)
           .append("text").attr("transform", "rotate(-90)").attr("y", 6).attr("dy", ".71em").style("text-anchor", "end").text("");
 
@@ -149,7 +154,7 @@ function loadForumSupportPostCount(tagName, group) {
             .attr("class", "x axis")
             .attr("transform", "translate(0," + height + ")")
             .call(xAxis);
-
+            
         svg.append("g")
             .attr("class", "y axis")
             .call(yAxis)
